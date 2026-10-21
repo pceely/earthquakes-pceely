@@ -22,7 +22,7 @@ def get_data():
     )
     # The response we get back is an object with several fields.
     # The actual contents we care about are in its text field:
-    text = response.text
+    # text = response.text
     # To understand the structure of this text, you may want to save it
     # to a file and open it in VS Code or a browser.
     # See the README file for more information.
@@ -46,6 +46,7 @@ def get_max_magnitude(earthquake_data):
 def get_location(earthquake_no):
     """Retrieve the latitude and longitude of an earthquake item."""
     # There are three coordinates, but we don't care about the third (altitude)
+    # I have included the place as well, so that it is more readable
     cord1 = earthquake_data['features'][earthquake_no]['geometry']['coordinates'][0]
     cord2 = earthquake_data['features'][earthquake_no]['geometry']['coordinates'][1] 
     place = earthquake_data['features'][earthquake_no]['properties']['place']
@@ -68,9 +69,7 @@ print(f"Loaded {count_earthquakes(earthquake_data)}")
 print(f"the maxium magnitude is {get_max_magnitude(earthquake_data)}")
 
 max_magnitude, max_location = get_maximum(earthquake_data)
-#max_magnitude
-#max_location
-#max_location[:]
+
 print(f"The strongest earthquake was at {max_location[:]} with magnitude {max_magnitude}")
 
 
