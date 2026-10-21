@@ -37,29 +37,42 @@ def count_earthquakes(earthquake_data):
     # len(earthquake_data['features'])
     return len(earthquake_data['features'])
 
+def get_max_magnitude(earthquake_data):
+    """Get the maxiumum magnitude from the date."""
+    # earthquake_data['features'][earthquake_no]['properties']['mag']
+    return max([earthquake_data['features'][n]['properties']['mag'] for n in range(count_earthquakes(earthquake_data))])
 
-def get_magnitude(earthquake_no):
-    """Retrive the magnitude of an earthquake item."""
-    return earthquake_data['features'][earthquake_no]['properties']['mag']
-
-
-def get_location(earthquake):
+def get_location(earthquake_no):
     """Retrieve the latitude and longitude of an earthquake item."""
     # There are three coordinates, but we don't care about the third (altitude)
-    return ...
+    cord1 = earthquake_data['features'][earthquake_no]['geometry']['coordinates'][0]
+    cord2 = earthquake_data['features'][earthquake_no]['geometry']['coordinates'][1] 
+    return [cord1, cord2]
 
 
-def get_maximum(data):
+def get_maximum(earthquake_data):
     """Get the magnitude and location of the strongest earthquake in the data."""
-    ...
+    max_magnitude = get_max_magnitude(earthquake_data)
+    max_earthquake_no = []
+    for n in range(count_earthquakes(earthquake_data)):
+        if earthquake_data['features'][n]['properties']['mag'] == max_magnitude:
+            print(f"max magnitude is earthquake {n}")
+            location = get_location(n)
+            print (location)
+            max_earthquake_no.append(n)
+    
+    return max_magnitude, max_location
 
 
 # With all the above functions defined, we can now call them and get the result
 earthquake_data = get_data()
-print(f"Loaded {count_earthquakes(data)}")
+print(f"Loaded {count_earthquakes(earthquake_data)}")
+print(f"the maxium magnitude is {get_max_magnitude(earthquake_data)}")
 
+max_magnitude = get_max_magnitude(earthquake_data)
+max_magnitude
 
-
+get_maximum(earthquake_data)
 
 max_magnitude, max_location = get_maximum(data)
 print(f"The strongest earthquake was at {max_location} with magnitude {max_magnitude}")
@@ -103,20 +116,6 @@ with open('earthquake_data3.json', 'w') as file:
     json.dump(earthquake_data, file, indent=4, sort_keys=True)
 
 
-
-
-# trying to parse the data
-import pandas as pd
-
-"""
-sunspots = pd.read_csv(spots.raw, delimiter=';',
-                       names=['year','month','date',
-                               'mean','deviation','observations','definitive'])
-"""
-
-earthquake_data = pd.read_json(text)
-earthquake_data = pd.read_json(text_clean)
-type(earthquake_data)
 print(earthquake_data['bbox'])
 print(earthquake_data['features']['100'])
 print(earthquake_data['features'][1])
@@ -124,14 +123,39 @@ earthquake_list = earthquake_data['features']
 len(earthquake_list)
 earthquake_data['features'][5]['properties']['mag']
 print(earthquake_data['features'][1]['properties']['mag'])
+print(earthquake_data['features'][1]['geometry']['coordinates'][0])
 
 
-for n in range(119):
+for n in range(count_earthquakes(earthquake_data)):
+#for n in range(119):    
     print(earthquake_data['features'][n]['properties']['mag'])
-    
+    print(earthquake_data['features'][n]['geometry']['coornidates'])
     # magnitude.append(earthquake_data['features'][n]['properties']['mag'])
+    earthquake_data['features'][1]['properties']['mag']
+    earthquake_data['features'][1]['properties']['mag']
 
-    earthquake_data['features'][1]['properties']['mag'])
 
+max_magnitude = max([earthquake_data['features'][n]['properties']['mag'] for n in range(119)])
+max_magnitude = max([earthquake_data['features'][n]['properties']['mag'] for n in range(count_earthquakes(earthquake_data))])
+max_magnitude
 
- 
+max_index = earthquake_data['features'].index(max_magnitude)
+
+location = []
+max_earthquake_no = []
+for n in range(count_earthquakes(earthquake_data)):
+#for n in range(119):    
+    #print(earthquake_data['features'][n]['properties']['mag'])
+    if earthquake_data['features'][n]['properties']['mag'] == max_magnitude:
+        print(f"max magnitude is earthquake {n}")
+        location = get_location(n)
+        print (location)
+        max_earthquake_no.append(n)
+
+max_earthquake_no
+location
+
+    # magnitude.append(earthquake_data['features'][n]['properties']['mag'])
+    earthquake_data['features'][1]['properties']['mag']
+    earthquake_data['features'][1]['properties']['mag']
+
